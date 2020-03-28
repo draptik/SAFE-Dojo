@@ -121,11 +121,13 @@ module ViewParts =
             map [
                 (* Task 3.2 MAP: Set the center of the map using MapProps.Center, supply the lat/long value as input.
                    Task 3.3 MAP: Update the Zoom to 15. *)
-                MapProps.Zoom 11.
+                MapProps.Center latLong
+                MapProps.Zoom 15.0
                 MapProps.Style [ Height 500 ]
             ] [
                 tileLayer [ TileLayerProps.Url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" ] []
                 (* Task 3.4 MAP: Create a marker for the map. Use the makeMarker function above. *)
+                makeMarker latLong (sprintf "%s - %s" (lr.Postcode.ToUpper()) lr.Location.Region)
             ]
         ]
 
@@ -231,6 +233,7 @@ let view (model:Model) dispatch =
                         (* Task 3.1 MAP: Call the mapTile function here, which creates a
                         tile to display a map using the React Leaflet component. The function
                         takes in a LocationResponse value as input and returns a ReactElement. *)
+                        mapTile report.Location
                     ]
                 ]
                 Tile.ancestor [ ] [
